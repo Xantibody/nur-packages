@@ -1,0 +1,35 @@
+name: "Update Firefox addons"
+on:
+  schedule:
+    - cron: "0 19 * * *"
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Update Firefox addons
+        run: |
+          nix run git+https://git.sr.ht/~rycee/mozilla-addons-to-nix -- \
+            pkgs/firefox-addons/addons.json pkgs/firefox-addons/default.nix
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          commit-message: "chore: update Firefox addons"
+          title: "chore: update Firefox addons"
+          body: "Automated update of Firefox addons via `mozilla-addons-to-nix`."
+          branch: update/firefox-addons
