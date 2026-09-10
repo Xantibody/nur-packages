@@ -17,7 +17,8 @@
   overlays = import ./overlays; # nixpkgs overlays
   firefox-addons = pkgs.lib.recurseIntoAttrs (
     pkgs.callPackage ./pkgs/firefox-addons {
-      buildFirefoxXpiAddon = pkgs.lib.makeOverridable ({ pname, version, addonId, url, sha256, meta, ... }:
+      # AIDEV-NOTE: this name must track mozilla-addons-to-nix's generated signature (was buildFirefoxXpiAddon)
+      buildMozillaXpiAddon = pkgs.lib.makeOverridable ({ pname, version, addonId, url, sha256, meta, ... }:
         pkgs.stdenv.mkDerivation {
           name = "${pname}-${version}";
           inherit meta;
