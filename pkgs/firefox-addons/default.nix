@@ -2,10 +2,10 @@
   {
     "plamo-translate" = buildMozillaXpiAddon {
       pname = "plamo-translate";
-      version = "0.8.0";
+      version = "0.8.3";
       addonId = "{da1a7868-5062-4eb9-a787-6d9210703929}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/5091555/plamo_translate-0.8.0.xpi";
-      sha256 = "c3ba12654957c7a4da72215c2bbbacf9dd0e33e6c64da2d582a9c34362105cc9";
+      url = "https://addons.mozilla.org/firefox/downloads/file/5156826/plamo_translate-0.8.3.xpi";
+      sha256 = "77a5e66317611f33cabde1a5c80d0456944694af9ec79da655d4ab025eb289a8";
       meta = with lib;
       {
         homepage = "https://translate.preferredai.jp";
